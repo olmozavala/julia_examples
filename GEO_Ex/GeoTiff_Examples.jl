@@ -1,0 +1,37 @@
+using GeoArrays
+using Plots
+# https://github.com/evetion/GeoArrays.jl
+
+## Read and plot example file
+root = "/home/olmozavala/Dropbox/TestData/GIS/Bathymetry/"
+bath = GeoArrays.read(joinpath(root,"MergedLow.tif"))
+println("Done reading!")
+# Access data with bath.A
+
+## Useful stuff
+println(bath.crs) # Acess projection
+# println(coords(bath,[1,1]))  # Accessing coordinated in specific location
+println(indices(bath,[0.0,0.0]))  # Accessing indices in specific location
+# plot(bath, band=1)
+
+## ----------------------- Save data to netcdf ---------------
+using NCDatasets
+# The mode "c" stands for creating a new file (clobber)
+ds = Dataset(joinpath(root,"Bathymetry.nc"), "c")
+dims = size(bath.A)
+
+# Define the dimension "lon" and "lat" with the size 100 and 110 resp.
+defDim(ds,"lon",dims[1])
+defDim(ds,"lat",dims[2])
+
+# Define a global attribute
+ds.attrib["title"] = "Global Bathymetry"
+
+# Define the variables temperature with the attribute units
+v = defVar(ds,"Bathymetry",Float32,("lon","lat"), attrib = Dict( "units" => "pixels"))
+
+# add additional attributes
+v.attrib["comments"] = "this is a string attribute with Unicode Ω"
+
+v[:,:] = bath.A[:,end:-1:1,1]
+close(ds)
