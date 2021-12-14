@@ -1,0 +1,7 @@
+name = "Geo_Julia_Examples"
+authors = ["Olmo Zavala <olmozavala@gmail.com>"]
+
+[deps]
+GMT = "5752ebe1-31b9-557e-87aa-f909b540aa54"
+GeoArrays = "2fb1d81b-e6a0-5fc5-82e6-8e06903437ab"
+NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"

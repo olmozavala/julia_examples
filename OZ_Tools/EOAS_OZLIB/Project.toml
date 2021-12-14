@@ -1,0 +1,8 @@
+name = "EOAS_OZLIB"
+authors = ["Olmo Zavala <olmozavala@gmail.com>"]
+
+[deps]
+GMT = "5752ebe1-31b9-557e-87aa-f909b540aa54"
+Missings = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
+NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
+Plotly = "58dd65bb-95f3-509e-9936-c39a10fdeae7"

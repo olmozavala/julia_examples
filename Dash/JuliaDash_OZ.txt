@@ -1,0 +1,8 @@
+== Installation ==
+] activate .
+] update; precompile
+
+== Execution ==
+-- Do this inside the current folder
+
+julia --project=. HelloDash.jl

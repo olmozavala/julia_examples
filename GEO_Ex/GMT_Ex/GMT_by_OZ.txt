@@ -1,0 +1,47 @@
+Docs    --> https://docs.generic-mapping-tools.org/latest/
+Tutorial --> http://gmt.soest.hawaii.edu/doc/latest/GMT_Tutorial.html
+julia --> https://github.com/GenericMappingTools/GMT.jl
+== Install ==
+sudo apt-get install gmt gmt-dcw gmt-gshhg ghostscript
+
+== Input ==
+GMT can use 3 types of input
+Tables
+Gridded datasets 
+Color palette tables
+
+############## Julia ###########################
+== Important docs ===
+-- Grids
+https://www.generic-mapping-tools.org/GMT.jl/latest/types/#Grid-type
+-- Raster images (1-4 color bands)
+https://www.generic-mapping-tools.org/GMT.jl/latest/types/#Image-type
+-- Segments(points, lines or polygons)
+https://www.generic-mapping-tools.org/GMT.jl/latest/types/#Dataset-type
+-- Color Palettes
+https://www.generic-mapping-tools.org/GMT.jl/latest/types/#CPT-type
+
+-- Projections: 
+https://docs.generic-mapping-tools.org/latest/cookbook/map-projections.html?highlight=projections
+== Examples ===
+-- gmthelp([function]) will show the options available
+gmthelp(plot)
+
+############## SCRIPT ###########################
+== Modules ==
+-- Basemap http://gmt.soest.hawaii.edu/doc/latest/basemap.html
+-- Coast  http://gmt.soest.hawaii.edu/doc/latest/coast.html
+
+== Examples ==
+-- Simple plot
+gmt basemap -R10/70/-3/8 -JX8i/3i -B -B+glightred+t"My first plot" -png GMT_tut_1
+-- Logarithmic plot plot
+
+== Examples GEO
+-- Hello Mercator
+gmt coast -R-90/-70/0/20 -JM6i -B -Gchocolate -png GMT_tut_3
+-- Mexico with national (N1) and states (N2) boundaries
+-- Blue ocean (-S) Green land (-G)
+-- Coarse boundaries -Dc
+-- Rivers boundaries -Ih
+gmt coast -R-120/-75/05/38 -JM6i -B -V -N1/thickest -N2/thinnest -Gorange  -png GMT_tut_3
