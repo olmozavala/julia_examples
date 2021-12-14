@@ -9,6 +9,7 @@ using LinearAlgebra
 file_name = "/home/olmozavala/Dropbox/TestData/netCDF/gfs.nc"
 ds = Dataset(file_name)
 print(ds)
+print(keys(ds))
 
 # ----- Read and plotting  a field -----
 ## Single field

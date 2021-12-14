@@ -18,12 +18,11 @@ function lotka_volterra!(du, u, p, t)
     du[2] = dw = γ*r*w - δ*w
 end
 
-print("Parameters")
 u₀ = [1.0, 1.0]
 tspan = (0.0, 10.0)
 p = [1.2, 0.6, 0.3, 0.8] #This will be the TRUE solution
 
-print("Simulating data (true solution)")
+println("Simulating data (true solution)...")
 prob = ODEProblem(lotka_volterra!, u₀, tspan, p)
 sol = solve(prob, saveat=0.1)  # Here you can choose your solver and the accuracy desired options are here: https://diffeq.sciml.ai/dev/basics/common_solver_opts/
 # Here is where we get an array from the solution
@@ -31,6 +30,7 @@ dataset = Array(sol)
 plot(sol)
 scatter!(sol.t, dataset')  # Transposed dataset, just because of the way plots and difeq saves the 
 
+##
 Turing.setadbackend(:forwarddiff)  # Define which type of differentitation we want
 
 # Making Maximul Likelihood

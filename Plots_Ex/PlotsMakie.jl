@@ -1,22 +1,43 @@
 # https://github.com/JuliaPlots/Makie.jl
-## http://docs.juliaplots.org/latest/basics/
+#https://makie.juliaplots.org/dev/tutorials/basic-tutorial/
 using Random
-using Makie
+using CairoMakie
 using Colors
 
 ## Making some simple plots
-scene = Scene()
 x = -2π:.1:3π
 y = sin.(x)
 
-scene = lines(x,y, color = :blue)
-scene = scatter!(x,y, color = rand(length(x)))
+lines(x,y, color = :blue)
+scatter!(x,y, color = rand(length(x)))
+current_figure() # You need this call or you won't see anything
 
 ## ---- Images/Matrices ----
 x = sin.(-2*π:.1:2*π)
 # y = x .* transpose(x)
 A = rand(50, 50)
 scene = heatmap(A, color = :greys)
+
+## Streamplots
+struct FitzhughNagumo{T}
+    ϵ::T
+    s::T
+    γ::T
+    β::T
+end
+
+P = FitzhughNagumo(0.1, 0.0, 1.5, 0.8)
+
+f(x, P::FitzhughNagumo) = Point2f(
+    (x[1]-x[2]-x[1]^3+P.s)/P.ϵ,
+    P.γ*x[1]-x[2] + P.β
+)
+
+f(x) = f(x, P)
+
+streamplot(f, -1.5..1.5, -1.5..1.5, colormap = :magma)
+
+
 
 ## --- Subplots
 using AbstractPlotting: hbox, vbox

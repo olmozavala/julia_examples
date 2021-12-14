@@ -1,35 +1,40 @@
 using DiffEqOperators, DifferentialEquations, OrdinaryDiffEq
 using Plots
 
-function getAdvectionModel()
-    ## ====== Solving wave equation uₜₜ = c²uₓₓ
-    Δx = .5
-    x = Δx:Δx:2*π
+## ========= Advection 1D  ∂f/∂t + ∇ ⋅ (fu) = 0  → ∂f/∂t + (uᵢfₓ + uⱼf𝒚 + uₖf𝒛) = 0  
+function getAdvectionModel(x, t0, t1, Δt, v, Δσ=0)
+    ### x -> x Axis, t0 and t1 time range, v velocity, Δσ if we want to perturb the initial state
+
     n = length(x)
-    u₀ = sin.(x)
-    du₀ = ones(n)
+    Δx = x[2]-x[1]
+    u₀ = sin.(x) + (rand(n).-.5).*Δσ # This is our scalar field
+    ##
+    ord_deriv = 1
+    ord_approx = 2
+    # Δuw = UpwindDifference(ord_deriv, ord_approx, Δx, n, 1)
+    Δuw = CenteredDifference(ord_deriv, ord_approx, Δx, n)
 
-    order = 2 # approximation order
-    deriv = 2 # Order of derivative
+    U = v*ones(n) # Vector field moving homogeneously to one side
+    bcx = PeriodicBC(Float64)
 
-    ## ------- Define Boundary conditions -------
-    bc = Dirichlet0BC(Float64)
+    stepuw(u,p,t) = Δuw*bcx*(u.*U)  # Define the ODE with UpwindDifference
 
-    Δ = CenteredDifference(deriv, order, Δx, n)
-
-    # Solve an ODE uₜₜ = c²uₓₓ
-    # z = uₜ
-    c = 2
-    function wave(du,u,p,t) 
-        # Because we need to add the variable z = du/dt, we need to add
-        # another verctor with the same size of the spatial dimension of U 
-        # In this case u' is on the frist n elements, and u on the other n
-        du[1:n] = u[1:n]  # du[2] = zₜ = uₜₜ 
-        du[n:n*2] = Δ*bc*(c^2 .* u[n:end])  # du[2] = zₜ = uₜₜ 
-    end
-
-    v₀ = [u₀... u₀...]
-    tspan = (0.0, 10.0)
-    prob = ODEProblem(wave, v₀, tspan)
-    return init(prob, saveat=.1)
+    # Solving equation
+    probuw = ODEProblem(stepuw, u₀, (t0, t1))
+    # solve(probuw, saveat=Δt)
+    return init(probuw, Tsit5(), saveat=Δt)
 end
+
+## Only for testing
+# n = 10
+# Δx = 2*π/n
+# Δt = .5
+# x = range(Δx, step=Δx, length=n) 
+
+# M = getAdvectionModel(x, 0.0, 20.0, Δt, 2) # Get model
+
+# for i=1:100
+#     println("Time= $(M.t) U=$(M.u[1])")
+#     display(plot(x, M.u, title="T = $(M.t)"))
+#     step!(M, Δt, true)
+# end

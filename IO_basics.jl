@@ -16,3 +16,6 @@ for (root, dirs, files) in  walkdir(".")
         display(file)
     end
 end
+
+# Fuctions
+display(joinpath("/home", "olmozavala"))

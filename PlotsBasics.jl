@@ -28,7 +28,7 @@ bar(x, y)
 
 ## Save to file
 plot(sin,x)
-savefig("MyFig.npg")
+savefig("MyFig.png")
 
 ## Attributes
 plot(x, [sin.(x) .* 1.3, cos.(x)], 
@@ -37,10 +37,20 @@ plot(x, [sin.(x) .* 1.3, cos.(x)],
         lw = 2, xlabel="xlabel", ylabel="ylabel",
         ylims = (-2,2)) 
 # Add to previous plot
-plot!(x, sin.(x).*1.1, c = :red, bc = :yellow, size = (400,300))
+plot!(x, sin.(x).*1.1, c = :red, bc = :yellow, size = (800,600))
+
+## Subplots (run with single line, not sure why it doesnt work for run cell)
+l = @layout [a b]
+a = plot(sin.(x));
+b = plot(cos.(x));
+plot(a,b, layout=l)
+a = heatmap(rand(10,10));
+b = heatmap(rand(10,10));
+plot(a,b, layout=@layout [a b])
+
 
 # ## ---- Images/Matrices Not Working ----
-# heatmap(randn(10,10))
+heatmap(randn(10,10), clim=(0,1))
 
 ## ---- Recipes -----
 using Plots

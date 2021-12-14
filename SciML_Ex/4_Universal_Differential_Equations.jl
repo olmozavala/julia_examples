@@ -5,12 +5,13 @@
 # https://tutorials.sciml.ai/
 # https://github.com/SciML/NeuralPDE.jl    (for PDE)
 # https://diffeq.sciml.ai/dev/solvers/ode_solve/   (Here you can see the methods and suggests which one to use)
+# (Code from paper) https://github.com/ChrisRackauckas/universal_differential_equations/blob/master/LotkaVolterra/scenario_1.jl
 using DifferentialEquations
 using Plots
 using OrdinaryDiffEq
 using ModelingToolkit
 using DataDrivenDiffEq
-using LinearAlgebra, DiffEqSensitivity, Optim
+using LinearAlgebra, Optim
 using DiffEqFlux, Flux
 
 ## #################### Universal ODE (3:04:47) #########################
@@ -25,35 +26,35 @@ function lotka_volterra!(du, u, p, t)
     du[2] = dw = γ*r*w - δ*w
 end
 
-print("Parameters")
+println("Parameters")
 tspan = (0.0, 3.0)
 u₀ = [0.44249296, 4.6280594]
 p = [1.3, 0.9, 0.8, 1.8] #This will be the TRUE solution
+original_p = p
 
-print("Simulating data (true solution)")
-prob = ODEProblem(lotka_volterra!, u₀, tspan, p)
+println("Simulating data (true solution)....")
+prob = ODEProblem(lotka_volterra!, u₀, tspan, original_p)
 sol = solve(prob, saveat=0.1)  # Here you can choose your solver and the accuracy desired options are here: https://diffeq.sciml.ai/dev/basics/common_solver_opts/
-# Here is where we get an array from the solution
 dataset = Array(sol)
 noisydata = dataset + Float32(1e-1)*rand(eltype(dataset), size(dataset))
 plot(sol)
-# scatter!(sol.t, dataset')  
-scatter!(sol.t, noisydata')   
+scatter!(sol.t, noisydata', title="Example Data")
+println("Done!")
 
 ## Make your NN
-ann = FastChain(FastDense(2,32,tanh), FastDense(32, 32, tanh))
-p = initial_params(ann)
+ann = FastChain(FastDense(2,32,tanh), FastDense(32, 32, tanh), FastDense(32, 2))
+pnn = initial_params(ann)
 
 # Here we define our UDE. We know some parts but not all of them
 function dudt(u, p, t)
     x, y = u
     z = ann(u, p) # Here we define z as aour NN
-    [p[1]*x + z[1],
-     p[4]*y  + z[2]]
+    [original_p[1]*x + z[1],
+     -original_p[4]*y  + z[2]]
 end
     
-prob_nn = ODEProblem(dudt, u₀, tspan, p)
-sol = concrete_solve(prob_nn, Tsit5(), u₀, p, saveat=0.1)  # Here you can choose your solver and the accuracy desired options are here: https://diffeq.sciml.ai/dev/basics/common_solver_opts/
+prob_nn = ODEProblem(dudt, u₀, tspan, pnn)
+sol = concrete_solve(prob_nn, Tsit5(), u₀, pnn, saveat=0.1)  # Here you can choose your solver and the accuracy desired options are here: https://diffeq.sciml.ai/dev/basics/common_solver_opts/
 plot(sol)
 scatter!(sol.t, dataset', title="Solution with initial parameters")  # Transposed dataset, just because of the way plots and difeq saves the 
 
@@ -61,7 +62,7 @@ scatter!(sol.t, dataset', title="Solution with initial parameters")  # Transpose
 
 # Just a function to solve with a Numerical Method (RK4 for example)
 function predict(θ)
-    Array(concrete_solve(prob_nn, Vern7(), u₀, θ, saveat=0.1, abstol=1e-6, reltol=1e-6))
+    Array(concrete_solve(prob_nn, Vern7(), u₀, θ, tspan=tspan, saveat=0.1, abstol=1e-6, reltol=1e-6))
 end
 # Our loss function is the predicted nuerical solution vs our data
 function loss(θ)
@@ -69,6 +70,7 @@ function loss(θ)
     sum(abs2, noisydata .- pred), pred
 end
 
+## Just before training...
 const losses = []
 # Just a callback to print some losses
 function train_callback(θ, l, pred)
@@ -79,26 +81,40 @@ function train_callback(θ, l, pred)
     false
 end
 
-# Here we optimize the parameters of the NN part
-@time res = DiffEqFlux.sciml_train(loss, p, ADAM(0.01), maxiters = 100, cb = train_callback)
+## Here we optimize the parameters of the NN part
+@time res = DiffEqFlux.sciml_train(loss, pnn, ADAM(0.01), maxiters = 100, cb = train_callback)
+println("Final error Adam of: $(res.minimum)")
 @time res2 = DiffEqFlux.sciml_train(loss, res.minimizer, BFGS(initial_stepnorm=0.01), cb = train_callback)
-
+println("Final error of: $(res2.minimum)")
 plot(losses, yaxis = :log, xaxis = :log, xlabel = "Iterations", ylabel = "Loss")
 
+## Plotting the results
 NNsolution = predict(res2.minimizer)
 plot(sol.t, dataset', title="Data and solved ODE with NN inside of it", label= ["Original u₁" "Original u₂"])
 scatter!(sol.t, NNsolution', label= ["NN u₁" "NN u₂"])
 
+## Plot the derivatives found by the NN
+prob_nn2 = ODEProblem(dudt, u₀, tspan, res2.minimizer)
+sol_nn = solve(prob_nn2, saveat=0.1)
+
+X = noisydata
+DX = Array(sol(sol.t, Val{1}))   # Gets DX
+DX_nn = Array(sol_nn(sol.t, Val{1}))
+
+plot(DX')
+plot!(DX_nn')
+
 ## Now lets predict outside the training domain
-tspan = (0.0, 5.5)
+test_tspan = (0.0, 4.0)
 
-prob = ODEProblem(lotka_volterra!, u₀, tspan, p)
-prob_nn = ODEProblem(dudt, u₀, tspan, res2.minimizer)
+test_prob = ODEProblem(lotka_volterra!, u₀, test_tspan, original_p)
+test_prob_nn = ODEProblem(dudt, u₀, test_tspan, res2.minimizer)
 
-sol = solve(prob, saveat=0.1)  # Here you can choose your solver and the accuracy desired options are here: https://diffeq.sciml.ai/dev/basics/common_solver_opts/
-sol_nn = solve(prob_nn, saveat=0.1)
-plot(sol, label= ["Original u₁" "Original u₂"])
-scatter!(sol.t, sol_nn', label= ["NN u₁" "NN u₂"])
+test_sol = solve(test_prob, saveat=0.1)  # Here you can choose your solver and the accuracy desired options are here: https://diffeq.sciml.ai/dev/basics/common_solver_opts/
+test_sol_nn = solve(test_prob_nn, saveat=0.1)
+plot(test_sol, label= ["Original u₁" "Original u₂"])
+scatter!(test_sol.t, test_sol_nn', label= ["NN u₁" "NN u₂"])
+vline!([3.0])
 
 
 ## ====================== Then we transform our NN back into equations (3:13:30) ========================

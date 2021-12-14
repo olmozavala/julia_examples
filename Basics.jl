@@ -11,9 +11,10 @@ println(str)
 :a  # Defines a symbol that you can use later 
 typeof(:a)
 
-#Evaluating variables and expressions in a string 
+#Evaluating variables and expressions in a string  Strings
 println("Evaluating variables and expressions in a string")
 println("Testing value of x = $x")
+println("Testing value of x = $(1.423)")
 println("Testing value of x+2 = $(x+2)")
 println("Leading zeros = $(lpad(5,3,'0'))")
 @printf("Number of decimals= %.2f",rand(1)[1])
@@ -48,6 +49,14 @@ println("Length: ", length(secarr))
 println("Array mult: ",arr.*secarr)
 println("Array mult: ",dot(arr,secarr))
 println("Array mult: ",transpose(arr)*secarr)
+##  ------ Index
+x = collect(0:1:10) # An equivalent to range
+println(x)
+println(x[1:5])
+println(x[1:2:5])
+println(x[end])
+println(x[1:2:end])
+println(circshift(x,2))
 
 ##  ------ Comprehensions
 println("Comprehensions")

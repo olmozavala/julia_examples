@@ -35,3 +35,7 @@ v.attrib["comments"] = "this is a string attribute with Unicode Ω"
 
 v[:,:] = bath.A[:,end:-1:1,1]
 close(ds)
+
+## SRTM dat https://topex.ucsd.edu/WWW_html/srtm15_plus.html
+# https://www.ngdc.noaa.gov/mgg/topo/gltiles.html
+# https://www.gebco.net/data_and_products/gridded_bathymetry_data/
