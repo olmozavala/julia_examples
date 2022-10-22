@@ -1,0 +1,5 @@
+name = "CUDA"
+authors = ["Olmo Zavala <olmozavala@gmail.com>"]
+
+[deps]
+CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"

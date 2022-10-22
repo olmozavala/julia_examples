@@ -1,0 +1,185 @@
+%Summary for the preliminaries
+\documentclass[doc]{apa}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage{algorithmic}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amsmath}
+%\usepackage[margin=0.5in]{geometry}
+
+
+
+\begin{document}
+\tableofcontents
+%This is used to never indent
+\setlength\parindent{0pt} 
+
+\section{Eqns}
+
+\subsection{\color{blue}Advection}
+The \textbf{Advection or Convection} operator is the following:
+\begin{equation}
+u \cdot \nabla =\nabla \cdot u  = u_x \frac{\partial}{\partial x} + u_y \frac{\partial}{\partial u_y} + u_z \frac{\partial}{\partial u_z}
+\end{equation}
+
+
+For a conserved quantity described by $f$ it is called the  \textbf{continuity equation} and 
+it models the motion of a conserved scalar field as it is advected by a known velocity field. 
+\begin{equation}
+    \frac{df}{dt} + \nabla \cdot f \vec u  = 0   
+\end{equation}
+
+In 2D $f(x,y,t)$ then $\vec u = (u_x, u_y)$ and the \textbf{continuity equation} is: 
+\begin{equation}
+\begin{split}
+    \frac{df}{dt} + \nabla \cdot f \vec u  & = 0  \\
+    \text{In 2D:} \\
+    \frac{df(x,y,t)}{dt} + u_x \frac{\partial f}{\partial x} + u_y \frac{\partial f}{\partial y}&  = 0  
+\end{split}
+\end{equation}
+
+\subsection{\color{blue}Diffusion/Heat}
+It describes the Brownian motion. 
+In this case $u$ represents the density of the diffused material. 
+\begin{equation}
+    \frac{\partial u}{\partial t} = \nabla \cdot [D \nabla u]
+\end{equation}
+
+With a constant diffusion coefficient $D$ given by $\lambda$:
+\begin{equation}
+    \frac{\partial u}{\partial t} = \lambda \nabla^2 u
+\end{equation}
+
+\subsection{\color{blue}Advection-Diffusion}
+Combination of diffusion and advection.
+
+\begin{equation}
+\frac{\partial f}{\partial t} = \lambda \nabla^2 f - \nabla \cdot f \vec u + R
+\end{equation}
+
+$R$ defines the sources or sinks of $f$. 
+
+\subsection{\color{blue}Wave equation}
+$u(x_1, x_2, \dots, x_n)$ can be the pressure in a liquid or the particles of a vibrating solid. 
+\begin{equation}
+    \frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u = c^2 \left (
+                                        \frac{\partial^2 u}{\partial x^2_1} +
+                                        \frac{\partial^2 u}{\partial x^2_2} +
+                                        \dots +
+                                        \frac{\partial^2 u}{\partial x^2_n} 
+                                        \right )
+\end{equation}
+$c$ is the speed of propagation.
+\newpage
+
+\subsection{\color{orange}Burgers' Equation}
+It occurss in various areas like fluid mechanics, nonlinear acoustics, gas dynamics, and traffic flow.\\
+For a given field $u(x,t)$ and diffusion  coefficient $\nu$, the general \textbf{viscous Burgers' equation}:
+\begin{equation}
+\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} = \nu \frac{\partial^2 u}{\partial x^2}
+\end{equation}
+
+\textbf{Inviscid Burgers' equation}. Which is a prototype for conservation equations that can develop discontinuities (shock waves).
+\begin{equation}
+\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} = 0
+\end{equation}
+
+
+%---------------------------------------------------------------------------------------------------
+\subsection{Boundary Conditions}
+
+\subsubsection{Dirichlet}
+Specifies the values of the function along the boundary of the domain.
+
+For ODEs Dirichlet boundary conditions on the interval $[a,b]$ are:
+\begin{equation}
+y(a) = \alpha, y(b) = \beta
+\label{dr:bc}
+\end{equation}
+
+For PDEs  Dirichlet boundary conditions on a domain $ \Omega \subset R^n$ are
+
+\begin{equation}
+y(x) = f(x) \;\;\; \forall x \in \partial \Omega
+\label{dr:bc1}
+\end{equation}
+
+\subsubsection{Neumann}
+Specifies the values in which the derivative of a solution along the boundary of the domain.
+
+For ODEs Neumann boundary conditions on the interval $[a,b]$ are:
+\begin{equation}
+y'(a) = \alpha, y'(b) = \beta
+\label{neu:bc}
+\end{equation}
+
+For PDEs  Neumann boundary conditions on a domain $ \Omega \subset R^n$ are
+\begin{equation}
+\frac{\partial y}{\partial \mathbf{n}}(x) = f(x) \;\;\; \forall x \in \partial \Omega
+\label{newu:bc1}
+\end{equation}
+where $\mathbf{n}$ denots the normal to the boundary 
+
+\subsubsection{Robin}
+Weighted combination of Dirichlet and Neumann
+
+
+%---------------------------------------------------------------------------------------------------
+\section{Consistency/Stability/Convergent/CFL}
+
+\subsection{Consistency}
+
+When $\Delta t, \Delta x \rightarrow 0$ then the error of the numerical method will go to 0. \\
+
+\subsubsection{Stability} 
+
+\begin{itemize}
+    \item The solution of an ODE/PDE is stable if a small perturbation does not cause divergence from the solution. 
+    \item A numerical method is stable if a small perturbation does not cause the numercial
+    solution to diverge without bound.
+\end{itemize}
+
+A FD scheme is stable in a region if there is an integer $J$ such that for any positive time $T$
+there is a constant $C_T$ such that:
+\begin{equation}
+||v^n||_{\Delta x} \leq C_T \sum_{j=0}^J ||v^j||_{\Delta x}
+\end{equation}
+\textbf{Convergent scheme} ?
+
+\textbf{CFL} It is a necessary condition for convergence, if we reduce the $\Delta x$ we need to reduce $\Delta t$.
+{\color{red} Important} in the following equations $u_{x_i}$ corresponds
+to the speed of the wave. In the advection equation it is
+easy, it is v in $ \frac{ \partial u}{ \partial t} + v\frac{\partial u}{\partial x} = 0 $ 
+
+\begin{equation}
+C = \Delta t \left (\sum _{i=1}^n \frac{u_{x_i}}{\Delta x_i} \right ) \leq C_{max}
+\end{equation}
+For explicit solver $C_{max} = 1$, for implicit $C_{max}$ may be larger.  For $C_{max} = 1$
+\begin{equation}
+\Delta t \leq \frac{1}{\sum _{i=1}^n \frac{u_{x_i}}{\Delta x_i} }
+\end{equation}
+
+%---------------------------------------------------------------------------------------------------
+\subsection{Methods}
+\subsubsection{FTCS}
+
+Replace any time derivative $u_t$ and space derivatives $u_x$ with:
+\begin{equation}
+u_t \approx \frac{\phi_m^{n+1} - \phi_m^{n}}{\Delta t}, u_x \approx \frac{\phi_{m+1}^n - \phi_{m-1}^n}{2 \Delta x}, 
+\end{equation}
+
+\subsubsection{Leapfrog (CTCS) }
+Replace any time derivative $u_t$ and space derivatives $u_x$ with:
+\begin{equation}
+u_t \approx \frac{\phi_m^{n+1} - \phi_m^{n-1}}{2 \Delta t}, u_x \approx \frac{\phi_{m+1}^n - \phi_{m-1}^n}{2 \Delta x}, 
+\end{equation}
+
+\subsubsection{Lax-Friedich}
+Replace any time derivative $u_t$ and space derivatives $u_x$ with:
+\begin{equation}
+u_t \approx \frac{\phi_m^{n+1} - \phi_m^{n-1}}{2 \Delta t}, u_x \approx \frac{\phi_{m+1}^n - \phi_{m-1}^n}{2 \Delta x}, 
+\end{equation}
+
+
+\end{document}

@@ -1,0 +1,10 @@
+\contentsline {section}{Eqns}{1}{}%
+\contentsline {subsection}{\color {blue}Advection}{1}{}%
+\contentsline {subsection}{\color {blue}Diffusion/Heat}{1}{}%
+\contentsline {subsection}{\color {blue}Advection-Diffusion}{2}{}%
+\contentsline {subsection}{\color {blue}Wave equation}{2}{}%
+\contentsline {subsection}{\color {orange}Burgers' Equation}{3}{}%
+\contentsline {subsection}{Boundary Conditions}{3}{}%
+\contentsline {section}{Consistency/Stability/Convergent/CFL}{3}{}%
+\contentsline {subsection}{Consistency}{3}{}%
+\contentsline {subsection}{Methods}{4}{}%
