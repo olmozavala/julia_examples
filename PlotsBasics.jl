@@ -31,26 +31,27 @@ plot(sin,x)
 savefig("MyFig.png")
 
 ## Attributes
-plot(x, [sin.(x) .* 1.3, cos.(x)], 
+plot(x, [sin.(x).* 1.3, cos.(x)], 
         title="Two plots together $sin(α)", label=["l1" "l2"], 
         c = [:blue :green],
         lw = 2, xlabel="xlabel", ylabel="ylabel",
-        ylims = (-2,2)) 
+        ylims = (-2,2),
+        xlims = (-5, 5)) 
 # Add to previous plot
 plot!(x, sin.(x).*1.1, c = :red, bc = :yellow, size = (800,600))
 
-## Subplots (run with single line, not sure why it doesnt work for run cell)
-l = @layout [a b]
+## Layouts(run with single line, not sure why it doesnt work for run cell)
 a = plot(sin.(x));
 b = plot(cos.(x));
-plot(a,b, layout=l)
+plot(a,b, layout=2) # Two columns by default
+plot(a,b, layout=(2,1))  # Two rows
+plot(a,b,a,a, layout=(4,1))  
+plot(a,b, layout=grid(2,1, heights=[0.3, 0.7]))  # Grid
+
+## ## ---- Images/Matrices ----
 a = heatmap(rand(10,10));
 b = heatmap(rand(10,10));
-plot(a,b, layout=@layout [a b])
-
-
-# ## ---- Images/Matrices Not Working ----
-heatmap(randn(10,10), clim=(0,1))
+plot(a,b, layout=2)
 
 ## ---- Recipes -----
 using Plots
@@ -84,9 +85,6 @@ end
 plot(dist)
 
 ## ---- Animations -----
-
-
-
 
 ## ================= More complicated stuff ==============
 # Examples: http://docs.juliaplots.org/latest/

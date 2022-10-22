@@ -2,7 +2,8 @@
 using Random
 using Plots
 using Colors
-# gr()
+using Printf
+gr()
 # plotly()
 # pyplot()
 print("The current backend in use is: ", backend())
@@ -15,39 +16,54 @@ plotattr(:Axis)
 # Plot specific attribute information
 plotattr("size")
 
+# --------------- BASICS --------------
 ## Making some simple plots
 x = -2π:.1:3π
 y = sin.(x)
-
+#(Ctrl+Shift+Enter for line by line)
 plot(x,y)
-# Same as 
-plot(sin,x)
 scatter(x, y)
 bar(x, y)
+##
+title = @sprintf "Title %0.2f" 0.341232
+plot(x, [y cos.(x)], 
+title = title, 
+xaxis="x",
+yaxis="y", 
+label =["m1" "m2"],
+lw = 3)
 
+## --------------- Call by function--------------
+plot(x, sin)
 
+# --------------- SUBPLOTS --------------
 ## Subplots
 l = @layout[a b]
 p1 = plot(y)
 p2 = plot(2*y)
 plot(p1, p2, layout=l)
-
-l = @layout[a;b]
-plot(p1, p2, layout=l)
-
-l = @layout[a{.8w}; b{.2h}] # Specify size of scrren
-plot(p1, p2, layout=l)
+# or 
+plot(p1, p2, layout=@layout[a b])
+## Modifying sizes
+plot(p1, p2, layout=@layout[a{.9w};b{.3h}])
 
 ## Save to file
 plot(sin,x)
 savefig("MyFig.png")
 
-# Plot inside loop
-for i=1:3
-    display(plot(sin.(x.+i)))
+## ---- Animations -----
+x = 0:.01:2*π
+# println("Done!")
+@gif for i in range(0, stop = 2π, length = 100)
+    f(x) = sin.(x.+i)
+    p = plot(x, f)
 end
 
-## Vector field
+
+## ----- 3D Plot ---
+
+
+## ----- Vector fields -------
 quiver([1,2,3],[3,2,1],quiver=([1,1,1],[1,2,3])) 
 dh = .1
 x = -π/2:dh:π/2
@@ -56,7 +72,7 @@ Y = x * ones(length(x))'
 # Single gyre
 U(x,y) = -sin.(y)
 V(x,y) =  sin.(x) .* sin.(y./2 .+ π/2)
-##
+# 
 l = @layout[a b c d]
 p1 = heatmap(x,x, X, title="X", c = :delta)
 p2 = heatmap(x,x,Y, title="Y", c = :delta)
@@ -73,7 +89,6 @@ function plotvector(x,y,u,v,subsample)
 end
 
 plotvector(X,Y,U,V,2)
-
 
 ## Attributes
 plot(x, [sin.(x) .* 1.3, cos.(x)], 
@@ -114,8 +129,6 @@ end
 # that was pretty easy!
 plot(dist)
 
-## ---- Animations -----
-
 ## ================= More complicated stuff ==============
 # Examples: http://docs.juliaplots.org/latest/
 # define the Lorenz attractor
@@ -154,4 +167,3 @@ plt = plot3d(
     step!(attractor)
     push!(plt, attractor.x, attractor.y, attractor.z)
 end every 10
-println("Done!")

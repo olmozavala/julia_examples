@@ -1,7 +1,7 @@
 using Plots
 gr()
 
-"It generated a normalized Gaussian shape (maximum value of 1). 
+"It generates a normalized Gaussian shape (maximum value of 1). 
 # Arguments
 - n::Integer: The size of the shape
 - σ::Float: STD of the function
@@ -22,7 +22,6 @@ end
 - d::Integer: Dimension of the Gaussian shape
 "
 function getGauss(n::Int, σ::Float64, μ::Float64=0.0, d::Int = 1)
-    # TODO this is not true in 2D
     # Simple function to obtain a Gaussian function
     # g(x) = (1/(σ*√(2π))).*exp.(-.5((x.-μ).^2)/σ^2)
     g(x) = (1/(σ*√(2π))).*exp.(-.5((x.-μ).^2)/σ^2)
@@ -45,8 +44,9 @@ function getGauss(n::Int, σ::Float64, μ::Float64=0.0, d::Int = 1)
         end
         return A
     end
+    print("Error: I'm sure you defined a dimension higher than 2 isn't?")
 end
 
 # scatter(getGauss(100, 10.0))
-# heatmap(getGauss(100, 3.0, 2))
-# heatmap(getGauss(100, 3.0, 2, (0.0,10.5)))
+# heatmap(getGauss(100, 3.0, 0.0, 2))
+heatmap(getGauss(100, 3.0, (0.0,10.5), 2))

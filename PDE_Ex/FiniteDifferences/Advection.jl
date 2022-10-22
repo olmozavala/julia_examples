@@ -3,6 +3,7 @@ using ModelingToolkit, DiffEqOperators, DifferentialEquations
 using Plots
 using Random
 using DiffEqOperators, OrdinaryDiffEq
+## 
 gr()
 include("../../OZ_Tools/ExampleData.jl")
 
@@ -21,14 +22,12 @@ ord_approx = 2
 # display(Matrix(Δuw))
 # println(size(Matrix(Δuw)))
 
-
 ## ---- Define boundary conditions
 # Boundary conditions  au + b ∂u/∂n = c  
 # bcx = RobinBC((1.0, 0.0, 0.0),(1.0, 0.0, 0.0), (Δx), 1, size(u₀)) # Direichlet = 0
 # bcx = Neumann0BC(Δx)
 # bcx = Dirichlet0BC(Float64)
 bcx = PeriodicBC(Float64)  # x[-1] = x[end] and x[end+1] = x[0]
-
 
 scatter(x, u₀, label="Scalar field")
 # Plot the boundary conditions with u₀
