@@ -26,13 +26,13 @@ println("3 Size: ", size(arr_row))
 println("Length: ", length(arr_row))
 println("Concatenation: ", [arr_col1..., arr_col2...])
 println("Array mult by element: ", arr.*arr_col2)
-println("Array mult (dot product): ",dot(arr,arr_col2))
+println("Array mult (dot product): ",dot(arr_col1,arr_col2))
 println("Array mult matrix (row by col): ",transpose(arr_col1)*arr_col2)
 println("Array mult matrix (row by col): ",arr_row*arr_col2)
 println("Array mult matrix (col by row): ",arr_col2*arr_row)
 
 ##  ------ Basic methods
-println(arr_col1.min)
+println(minimum(arr_col1))
 
 ##  ------ Index
 x = collect(0:1:10) # An equivalent to range

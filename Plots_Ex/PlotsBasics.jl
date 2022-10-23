@@ -102,12 +102,12 @@ plot!(x, sin.(x).*1.1, c = :red, bc = :yellow, size = (400,300))
 heatmap(randn(10,10))
 
 ## ---- Recipes -----
-@recipe function f{Float64}(x)
-    y = sin(x)
-    seriestype --> :path  # there is always an attribute dictionary `d` available...
-    x, y
-end
-plot(-2π:2π, f)
+# @recipe function f{Float64}(x)
+#     y = sin(x)
+#     seriestype --> :path  # there is always an attribute dictionary `d` available...
+#     x, y
+# end
+# plot(-2π:2π, f)
 
 ## ---- Recipes -----
 using Distributions
@@ -120,14 +120,14 @@ dist = Normal(10, 50)
 # Build a recipe which acts on a custom type.
 # Notice that the function apply_recipe is returned.
 # The recipe macro is just a convenience to build apply_recipe definitions.
-@recipe function f(dist::Distribution, x = default_range(dist))
-    y = map(xi -> pdf(dist,xi), x)
-    seriestype --> :path  # there is always an attribute dictionary `d` available...
-                          # If the user didn't specify a seriestype, we choose :path
-    x, y
-end
+# @recipe function f(dist::Distribution, x = default_range(dist))
+    # y = map(xi -> pdf(dist,xi), x)
+    # seriestype --> :path  # there is always an attribute dictionary `d` available...
+                          If the user didn't specify a seriestype, we choose :path
+    # x, y
+# end
 # that was pretty easy!
-plot(dist)
+# plot(dist)
 
 ## ================= More complicated stuff ==============
 # Examples: http://docs.juliaplots.org/latest/

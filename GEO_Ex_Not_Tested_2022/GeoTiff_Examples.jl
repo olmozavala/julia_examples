@@ -3,8 +3,8 @@ using Plots
 # https://github.com/evetion/GeoArrays.jl
 
 ## Read and plot example file
-root = "/home/olmozavala/Dropbox/TestData/GIS/Bathymetry/"
-bath = GeoArrays.read(joinpath(root,"MergedLow.tif"))
+root = "/home/olmozavala/Dropbox/TestData/GIS/Topo/"
+bath = GeoArrays.read(joinpath(root,"merged.tif"))
 println("Done reading!")
 # Access data with bath.A
 
@@ -12,7 +12,7 @@ println("Done reading!")
 println(bath.crs) # Acess projection
 # println(coords(bath,[1,1]))  # Accessing coordinated in specific location
 println(indices(bath,[0.0,0.0]))  # Accessing indices in specific location
-# plot(bath, band=1)
+heatmap(bath, band=1)
 
 ## ----------------------- Save data to netcdf ---------------
 using NCDatasets

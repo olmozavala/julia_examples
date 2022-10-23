@@ -24,9 +24,12 @@ model = Dense(1 => 1) # One input and one output (by default σ is the identity)
 act = relu
 model = Chain(Dense(1 => 5, act), 
               Dense(5 => 5, act), 
+              Dense(5 => 5, act), 
+              Dense(5 => 5, act), 
+              Dense(5 => 5, act), 
               Dense(5 => 1)) 
 
-print("Weights: $(model.weight) and bias: $(model.bias)")
+print("Weights first layer: $(model[1].weight) and bias: $(model[1].bias)")
 scatter(x_train', y_train', label="Data")
 plot!(x_train', model(x_train)', label="model", c=:red)
 

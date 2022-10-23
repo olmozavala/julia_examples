@@ -21,4 +21,6 @@ print("Done!")
 ##
 println(sol)
 println(result(sol))
-println(sol.parameters)
+params = println(sol.parameters)
+
+# BUT HOW TO EVALUATE BACK FROM THE BASIS AND THE PARAMETERS

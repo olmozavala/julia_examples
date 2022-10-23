@@ -15,7 +15,7 @@ function plotsol(t, u₀, α, sol)
 end
 
 ## ################ Simplest case  du/dt = f(t,u) with f(t,u) = αu#############
-## **************** Solving normally *************
+# **************** Solving normally *************
 println("Configuring problem...")
 α = 1.1
 Δt = 0.1
@@ -63,5 +63,14 @@ println("Done!")
 ##
 println("ODE Solved! Plotting...")
 t = sol.t
-plotsol(t, u₀, 1.1, sol)
+α = 1.1
+# plotsol(t, u₀, 1.1, sol)
+# plot(t, t -> u₀*exp(α*t), lw=5, label="True Solution!", xlabel="t", ylabel="u(t)")
+plot(t, t -> u₀*exp(α*t), lw=5, label="True Solution!", xlabel="t", ylabel="u(t)")
+p1 = plot!(sol,lw=3,ls=:dash,title="Num sol",
+     xaxis="Time (t)",yaxis="u(t) (in μm)",label="ODE approx!") # legend=false
+p2 = plot(sol.t, sol.u, xaxis = "u(t)", yaxis="T", label="u(t)")
+plt = plot(p1, p2, layout=@layout[a b])
+display(plt)
+
 println("Done!")

@@ -6,7 +6,6 @@ using Statistics
 gr() # Using GR to plot
 
 ## --------- Make synthetic data
-
 # domain = [x ∈ Interval(-1.0, 1.0),
           # t ∈ Interval(0.0, 1.0)]
 

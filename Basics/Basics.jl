@@ -1,5 +1,6 @@
 using LinearAlgebra
 using Printf
+using Plots
 ##
 
 α = 3 # Unicode varibles

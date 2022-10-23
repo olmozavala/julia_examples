@@ -31,7 +31,6 @@ ode_data = Array(solve(prob_trueode, Tsit5(), saveat = tsteps)) # Generate 'true
 scatter(tsteps, ode_data', title="Simulated data")
 
 ## Build our neural network W₂*thanh(W₁x + b₁) 
-# dudt2 = FastChain((x, p) -> x.^3, # First thing you will receive x and and will cube the input
 dudt2 = FastChain((x, p) -> x,  
                     FastDense(2, 50, tanh),  # Dense layer
                     FastDense(50, 2)) # Dense layer without activation
@@ -76,7 +75,7 @@ scatter(tsteps, ode_data', title="Simulated data")
 plot!(tmp_sol)
 
 ## ------- Different initial conditions ---------
-u₀ = [1.0, 1.0]
+u₀ = [1.0, 1.2]
 res_prob = ODEProblem(neural_ode_f, u₀, tspan, res2.minimizer)  # We solve a NN using numerical ODE solveh
 tmp_sol = solve(res_prob, Tsit5(), saveat = tsteps)
 

@@ -2,6 +2,7 @@
 # Usings
 using DifferentialEquations
 using Plots
+using LinearAlgebra
 gr()
 
 

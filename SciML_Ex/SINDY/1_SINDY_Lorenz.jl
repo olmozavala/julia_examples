@@ -21,7 +21,7 @@ p = [10.0; -10.0; 28.0; -1.0; -1.0; 1.0; -8/3]
 tspan = (0.0,100.0)
 dt = 0.001
 prob = ODEProblem(lorenz,u0,tspan)
-sol = solve(prob, Tsit5(), saveat = dt, atol = 1e-7, rtol = 1e-8)
+sol = solve(prob, Tsit5(), saveat = dt)
 x = [x[1] for x in sol.u][1:50:50000]
 y = [x[2] for x in sol.u][1:50:50000]
 z = [x[3] for x in sol.u][1:50:50000]
@@ -57,5 +57,7 @@ opt = STLSQ(λs)
 res = solve(prob, basis, opt, progress = true, sampler = sampler, 
                     denoise = false, normalize = true, maxiter = 5000)
 print("Done!")
+##
 print(res)
-# println(result(res))
+println(result(res))
+# IT RUNS BUT THE OBTAINED DYNAMICS ARE WRONG

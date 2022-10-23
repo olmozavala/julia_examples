@@ -31,7 +31,7 @@ prob = discretize(sys, discretization)
 print("Done!")
 
 ##
-print("Solving ODE...")
+print("Solving as ODE...")
 Δt = 0.05
 sol = solve(prob, Tsit5(), saveat = 0.01) # Specify the error tolerance (compare and see)
 print("Done!")

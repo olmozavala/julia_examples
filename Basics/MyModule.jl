@@ -7,7 +7,6 @@ mutable struct MyData
 end
 
 function simplePlot(data::MyData)
-    plotly()
     print("The current backend in use is: ", backend())
     println(" $(data.x) and $(data.y)")
     ## Making some simple plots

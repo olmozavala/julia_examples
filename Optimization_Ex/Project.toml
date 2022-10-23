@@ -1,5 +1,6 @@
-name = "Basics"
+name = "Optimization"
 authors = ["Olmo Zavala <olmozavala@gmail.com>"]
 
 [deps]
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
