@@ -1,11 +1,8 @@
 using Dash
 using DashBootstrapComponents
 
-
 # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/alert/
-
 app = dash(external_stylesheets=[dbc_themes.BOOTSTRAP])
-
 
 app.layout = dbc_container(
     dbc_alert("Hello boostrap", color="success"),

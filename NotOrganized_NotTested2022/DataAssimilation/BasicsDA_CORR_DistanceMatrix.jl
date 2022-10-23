@@ -33,7 +33,6 @@ c = cov([T₀ T₁])
 # display(c)
 # display(A)
 
-
 ## ================ Distance correlation functions =======
 # From (Page 310) https://www.hycom.org/attachments/428_cummings-chap13.pdf
 
