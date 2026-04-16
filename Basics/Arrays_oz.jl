@@ -1,7 +1,8 @@
+# %%
 using LinearAlgebra
 using Printf
 
-## ------- Arrays ------
+# %% ------- Arrays ------
 # https://docs.julialang.org/en/v1/manual/arrays/#
 println("------- Arrays ------")
 arr = Float64[]
@@ -11,7 +12,7 @@ rx = rand(10)
 println("Random array: ", rx)
 println("Random array: $([@sprintf("%.2f",x) for x in rx])")
 
-##
+# %%
 println("------- Properties------")
 arr_col1 = ones(3); # Col vector
 arr_col2 = [2,3,5] # Col vector
@@ -31,10 +32,10 @@ println("Array mult matrix (row by col): ",transpose(arr_col1)*arr_col2)
 println("Array mult matrix (row by col): ",arr_row*arr_col2)
 println("Array mult matrix (col by row): ",arr_col2*arr_row)
 
-##  ------ Basic methods
+# %%  ------ Basic methods
 println(minimum(arr_col1))
 
-##  ------ Index
+# %%  ------ Index
 x = collect(0:1:10) # An equivalent to range
 println("x ", x)
 println("x[1:5] → ", x[1:5])
@@ -44,7 +45,7 @@ println("x[1:2:end] →  ", x[1:2:end])
 println("x[1:2:end-5] →  ", x[1:2:end-5])
 println("circshift(x,2) → ", circshift(x,2))
 
-## ---------- Matrices --------
+# %% ---------- Matrices --------
 println("# ---------- Matrices --------")
 println(ones(5))
 println(zeros(3,2))
@@ -54,7 +55,7 @@ println(mat)
 b = [10 432]
 println(mat/b) # Solving Ax=b
 
-## ---------- Tuples (inmmutable)
+# %% ---------- Tuples (inmmutable)
 tup = (1, "sopas")
 println(tup)
 # tup[1] = 3 # WIll fail

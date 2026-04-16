@@ -4,3 +4,8 @@
 *.history
 *.png
 *anifest.toml
+
+# Ignore large simulation output files
+**/runs/*.nc
+*.nc
+*.gif

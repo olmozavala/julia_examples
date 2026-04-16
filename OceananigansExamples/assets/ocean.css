@@ -1,0 +1,330 @@
+:root {
+  --bg: #07131d;
+  --bg-panel: rgba(10, 24, 38, 0.92);
+  --bg-soft: rgba(16, 35, 53, 0.78);
+  --line: rgba(119, 187, 255, 0.16);
+  --text: #e6f2ff;
+  --muted: #9ab7d5;
+  --teal: #50d4c8;
+  --orange: #ffa24c;
+  --gold: #f6d56f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(80, 212, 200, 0.17), transparent 22%),
+    radial-gradient(circle at top right, rgba(246, 213, 111, 0.12), transparent 16%),
+    linear-gradient(180deg, #07131d 0%, #081c2b 55%, #091521 100%);
+  color: var(--text);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 28px;
+}
+
+.hero-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.9fr);
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.hero-copy,
+.hero-callout,
+.visual-card,
+.controls-panel,
+.status-panel {
+  backdrop-filter: blur(14px);
+}
+
+.hero-copy {
+  padding: 30px 34px;
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(10, 24, 38, 0.95), rgba(8, 32, 49, 0.72)),
+    radial-gradient(circle at top right, rgba(80, 212, 200, 0.16), transparent 28%);
+}
+
+.hero-callout {
+  padding: 28px;
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(19, 42, 61, 0.92), rgba(10, 24, 38, 0.88));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eyebrow,
+.callout-label,
+.control-label,
+.metric-label,
+.section-title--small,
+.status-chip {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.hero-title {
+  margin: 10px 0 12px;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 0.92;
+}
+
+.hero-description,
+.callout-value,
+.example-description,
+.status-copy {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1.6fr) minmax(260px, 320px);
+  gap: 22px;
+  align-items: start;
+}
+
+.controls-panel,
+.status-panel,
+.visual-card {
+  padding: 22px;
+}
+
+.controls-panel,
+.status-panel {
+  position: sticky;
+  top: 22px;
+}
+
+.section-title {
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+}
+
+.section-title--small {
+  margin: 22px 0 14px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.control-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.control-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.control-input,
+.Select-control {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(133, 193, 255, 0.16);
+  background: rgba(10, 22, 33, 0.86);
+  color: var(--text);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.94rem;
+  padding: 12px 14px;
+}
+
+.Select-menu-outer {
+  background: #0d2234 !important;
+  border: 1px solid rgba(133, 193, 255, 0.16) !important;
+}
+
+.launch-button {
+  margin-top: 22px;
+  width: 100%;
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  background: linear-gradient(120deg, #50d4c8, #f6d56f);
+  color: #031019;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 18px 34px rgba(80, 212, 200, 0.24);
+}
+
+.launch-button:hover {
+  transform: translateY(-1px);
+}
+
+.launch-button--secondary {
+  margin-top: 28px;
+  width: auto;
+  min-width: 120px;
+  background: linear-gradient(120deg, rgba(80, 212, 200, 0.18), rgba(246, 213, 111, 0.24));
+  color: var(--text);
+  box-shadow: none;
+  border: 1px solid rgba(133, 193, 255, 0.16);
+}
+
+.visuals-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(10, 24, 38, 0.76);
+  min-height: 108px;
+}
+
+.metric-value {
+  margin-top: 12px;
+  font-size: 1.24rem;
+  font-weight: 700;
+}
+
+.metric-value--small {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.flow-graph {
+  min-height: 500px;
+}
+
+.viewer-control-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.viewer-control-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.run-list {
+  display: grid;
+  gap: 12px;
+}
+
+.run-entry {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(10, 24, 38, 0.62);
+}
+
+.run-entry-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.run-entry-meta,
+.run-entry-copy {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.run-entry-meta {
+  margin-top: 8px;
+}
+
+.timeline-label {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+}
+
+.timeline-mode {
+  margin-bottom: 14px;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(80, 212, 200, 0.12);
+  color: var(--teal);
+}
+
+.status-title {
+  margin: 16px 0 10px;
+  font-size: 1.25rem;
+}
+
+.status-copy--secondary {
+  margin-top: 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1320px) {
+  .content-grid {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .status-panel {
+    position: static;
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 980px) {
+  .app-shell {
+    padding: 18px;
+  }
+
+  .hero-band,
+  .content-grid,
+  .control-grid--two,
+  .control-grid--three,
+  .metric-grid,
+  .viewer-control-row,
+  .viewer-control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls-panel {
+    position: static;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}

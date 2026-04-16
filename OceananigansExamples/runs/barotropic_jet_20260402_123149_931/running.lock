@@ -1,0 +1,4 @@
+started_at=2026-04-02T12:31:49.931
+example_id=barotropic_jet
+backend=gpu
+netcdf=/home/olmozavala/Dropbox/TutorialsByMe/Julia/Julia_Examples/OceananigansExamples/runs/barotropic_jet_20260402_123149_931/simulation.nc

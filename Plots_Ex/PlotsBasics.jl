@@ -1,4 +1,4 @@
-## http://docs.juliaplots.org/latest/basics/
+# %%
 using Random
 using Plots
 using Colors
@@ -8,7 +8,7 @@ gr()
 # pyplot()
 print("The current backend in use is: ", backend())
 
-## Printing the possible attributes 
+# %% Printing the possible attributes 
 plotattr(:Plot)
 plotattr(:Series)
 plotattr(:Subplot)
@@ -16,15 +16,15 @@ plotattr(:Axis)
 # Plot specific attribute information
 plotattr("size")
 
-# --------------- BASICS --------------
-## Making some simple plots
+# %% --------------- BASICS --------------
+# Making some simple plots
 x = -2π:.1:3π
 y = sin.(x)
 #(Ctrl+Shift+Enter for line by line)
 plot(x,y)
 scatter(x, y)
 bar(x, y)
-##
+
 title = @sprintf "Title %0.2f" 0.341232
 plot(x, [y cos.(x)], 
 title = title, 
@@ -33,10 +33,10 @@ yaxis="y",
 label =["m1" "m2"],
 lw = 3)
 
-## --------------- Call by function--------------
+# %% --------------- Call by function--------------
 plot(x, sin)
 
-# --------------- SUBPLOTS --------------
+# %% --------------- SUBPLOTS --------------
 ## Subplots
 l = @layout[a b]
 p1 = plot(y)
@@ -47,11 +47,11 @@ plot(p1, p2, layout=@layout[a b])
 ## Modifying sizes
 plot(p1, p2, layout=@layout[a{.9w};b{.3h}])
 
-## Save to file
+# %% Save to file
 plot(sin,x)
 savefig("MyFig.png")
 
-## ---- Animations -----
+# %% ---- Animations -----
 x = 0:.01:2*π
 # println("Done!")
 @gif for i in range(0, stop = 2π, length = 100)
@@ -60,10 +60,10 @@ x = 0:.01:2*π
 end
 
 
-## ----- 3D Plot ---
+# %% ----- 3D Plot ---
 
 
-## ----- Vector fields -------
+# %% ----- Vector fields -------
 quiver([1,2,3],[3,2,1],quiver=([1,1,1],[1,2,3])) 
 dh = .1
 x = -π/2:dh:π/2
@@ -90,7 +90,7 @@ end
 
 plotvector(X,Y,U,V,2)
 
-## Attributes
+# %% Attributes
 plot(x, [sin.(x) .* 1.3, cos.(x)], 
         title="Two plots together $sin(α)", label=["l1" "l2"], 
         c = [:blue :green],
@@ -98,10 +98,10 @@ plot(x, [sin.(x) .* 1.3, cos.(x)],
 # Add to previous plot
 plot!(x, sin.(x).*1.1, c = :red, bc = :yellow, size = (400,300))
 
-# ## ---- Images/Matrices Not Working ----
+# %% ---- Images/Matrices Not Working ----
 heatmap(randn(10,10))
 
-## ---- Recipes -----
+# %% ---- Recipes -----
 # @recipe function f{Float64}(x)
 #     y = sin(x)
 #     seriestype --> :path  # there is always an attribute dictionary `d` available...
@@ -109,7 +109,7 @@ heatmap(randn(10,10))
 # end
 # plot(-2π:2π, f)
 
-## ---- Recipes -----
+# %% ---- Recipes -----
 using Distributions
 pyplot(size=(400,250));
 function default_range(dist::Distribution, n = 4)
@@ -123,13 +123,13 @@ dist = Normal(10, 50)
 # @recipe function f(dist::Distribution, x = default_range(dist))
     # y = map(xi -> pdf(dist,xi), x)
     # seriestype --> :path  # there is always an attribute dictionary `d` available...
-                          If the user didn't specify a seriestype, we choose :path
+    #                          If the user didn't specify a seriestype, we choose :path
     # x, y
 # end
 # that was pretty easy!
 # plot(dist)
 
-## ================= More complicated stuff ==============
+# %% ================= More complicated stuff ==============
 # Examples: http://docs.juliaplots.org/latest/
 # define the Lorenz attractor
 

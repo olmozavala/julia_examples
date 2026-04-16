@@ -1,0 +1,4 @@
+started_at=2026-04-02T12:06:28.902
+example_id=baroclinic_jet
+backend=gpu
+netcdf=/home/olmozavala/Dropbox/TutorialsByMe/Julia/Julia_Examples/OceananigansExamples/runs/baroclinic_jet_20260402_120628_902/simulation.nc
