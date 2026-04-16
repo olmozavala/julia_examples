@@ -79,7 +79,7 @@ function loss(θ)
 end
 
 # Container to track the losses
-# losses = Float32[]
+losses = Float32[]
 
 # Callback to show the loss during training
 callback(θ,l) = begin

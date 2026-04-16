@@ -1,3 +1,5 @@
+# %%
+
 using LinearAlgebra
 using Printf
 using Plots

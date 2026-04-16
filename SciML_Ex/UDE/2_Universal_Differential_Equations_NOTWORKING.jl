@@ -14,7 +14,7 @@ using DataDrivenDiffEq
 using LinearAlgebra, Optim
 using DiffEqFlux, Flux
 
-## #################### Universal ODE (3:04:47) #########################
+### #################### Universal ODE (3:04:47) #########################
 # The idea here is that you start with 'some part' of your DE and recover the missing terms.
 # https://github.com/ChrisRackauckas/universal_differential_equations
 
